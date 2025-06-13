@@ -1,4 +1,4 @@
-import fitz
+import pymupdf
 import os
 import re
 
@@ -24,7 +24,7 @@ def parse_resume(file_path:str) -> str:
 # Returns: extracted and cleaned text of pdf
 ######################################################
 def parse_pdf(file_path: str) -> str:
-    pdf = fitz.open(file_path)
+    pdf = pymupdf.open(file_path)
     all_text = ""
     for page in pdf:
         all_text += page.get_text()
@@ -51,7 +51,7 @@ def parse_txt(file_path: str) -> str:
 # Returns: extracted and cleaned text of docx
 ######################################################
 def parse_docx(file_path: str) -> str:
-    doc = fitz.open(file_path)
+    doc = pymupdf.open(file_path)
     all_text = ""
     for page in doc:
         all_text += page.get_text()
