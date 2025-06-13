@@ -1,20 +1,20 @@
 import pymupdf
 import os
 import re
+from docx import Document
 
 ###################################################
 # function will take in a file path as a string and will return a string
 # Parameter: file_path (str) - file path to the resume file
 # Returns: str: extracted and cleaned text for the document type
 ######################################################
-def parse_resume(file_path:str) -> str:
+def parse_resume(file_path:str, ext:str) -> str:
     # extract the ending portion of the filepath
-    ext = os.path.splitext(file_path)[1].lower()
     if ext == ".pdf":
         resume_text = parse_pdf(file_path)
-    if ext == ".txt":
+    elif ext == ".txt":
         resume_text = parse_txt(file_path)
-    if ext == ".docx":
+    elif ext == ".docx":
         resume_text = parse_docx(file_path)
     return resume_text
 
@@ -51,12 +51,10 @@ def parse_txt(file_path: str) -> str:
 # Returns: extracted and cleaned text of docx
 ######################################################
 def parse_docx(file_path: str) -> str:
-    doc = pymupdf.open(file_path)
-    all_text = ""
-    for page in doc:
-        all_text += page.get_text()
-    cleaned_txt = clean_txt(all_text)
-    return cleaned_txt
+    doc = Document(file_path)
+    # extract all text from a .docx file and joins it into a single string with each paragraph separated by a newline
+    all_text = "\n".join([para.text for para in doc.paragraphs])
+    return clean_txt(all_text)
 
 ###################################################
 # function will clean the text by removing leading/trailing whitespace, multiple spaces/tabs/newlines with one space, and replace multiple new lines with one newline
@@ -69,5 +67,5 @@ def clean_txt(text:str) -> str:
     # Replace multiple spaces/tabs/newlines with one space               
     text = re.sub(r'\s+', ' ', text)                  
     # Replace multiple newlines with one newline
-    text = re.sub(r'\n{2,}', ' \n'. text)  
+    text = re.sub(r'\n{2,}', ' \n', text)  
     return text
