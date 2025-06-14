@@ -45,7 +45,7 @@ if st.button("Submit"):
                     st.success(f"Your resume matches the job description with a score of {score:.2f}%.")
                     if missing:
                         st.markdown("**Missing keywords:**")
-                        st.write(", ".join(sorted(missing)))
+                        st.write(",  ".join(sorted(missing)))
     else:
         st.error("Please fill in the job description and upload your resume!")
 
