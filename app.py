@@ -1,7 +1,9 @@
 from utils.resume_parser import parse_resume
 from utils.match_resume_to_job import match_resume_to_job
+from utils.gemini_helper import gemini_resume_helper
 import os
 import streamlit as st
+import time
 
 
 st.title("ResumAI")
@@ -27,7 +29,6 @@ if st.button("Submit"):
     if job_description and uploaded_file:
         with st.spinner("Running your resume through our system..."):
             ext = os.path.splitext(uploaded_file.name)[1].lower()
-            
             if ext not in [".pdf", ".txt", ".docx"]:
                 st.error("Unsupported file type! Please upload a PDF, TXT, or DOCX file.")
             else:
@@ -40,14 +41,22 @@ if st.button("Submit"):
                 
                 if parsed_text and job_description.strip():
                     score, missing = match_resume_to_job(parsed_text, job_description)
-
                     # Display result
                     st.success(f"Your resume matches the job description with a score of {score:.2f}%.")
+                    if st.button("Click to improve your resume"):
+                        with st.spinner("Please wait..."):
+                            print("BBBBBBBBBBBBBBBBBBBBBB")
+                            ai_reponse = gemini_resume_helper(parsed_text, job_description)
+                            print("AAAAAAAAAAAAAAAAAAAAAAAA")
+                            st.write(ai_reponse)
                     if missing:
                         st.markdown("**Missing keywords:**")
                         st.write(",  ".join(sorted(missing)))
+                
+
+                                        
     else:
-        st.error("Please fill in the job description and upload your resume!")
+        st.error("Please fill in the job description and u pload your resume!")
 
 
 
