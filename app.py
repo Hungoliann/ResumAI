@@ -1,9 +1,10 @@
 from utils.resume_parser import parse_resume
 from utils.match_resume_to_job import match_resume_to_job
 from utils.gemini_helper import gemini_resume_helper
-import os
 import streamlit as st
+import os
 import time
+
 
 
 st.title("ResumAI")
