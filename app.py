@@ -40,23 +40,26 @@ if st.button("Submit"):
                 parsed_text = parse_resume(temp_path, ext)
                 
                 if parsed_text and job_description.strip():
+
                     score, missing = match_resume_to_job(parsed_text, job_description)
                     # Display result
                     st.success(f"Your resume matches the job description with a score of {score:.2f}%.")
-                    if st.button("Click to improve your resume"):
-                        with st.spinner("Please wait..."):
-                            print("BBBBBBBBBBBBBBBBBBBBBB")
-                            ai_reponse = gemini_resume_helper(parsed_text, job_description)
-                            print("AAAAAAAAAAAAAAAAAAAAAAAA")
-                            st.write(ai_reponse)
                     if missing:
                         st.markdown("**Missing keywords:**")
-                        st.write(",  ".join(sorted(missing)))
-                
-
-                                        
+                        st.write(",  ".join(sorted(missing))) 
+                    # stores data across the submit interaction and set flag in order for next button to show
+                    st.session_state["resume_text"] = parsed_text
+                    st.session_state["job_text"] = job_description
+                    st.session_state["show_improve_button"] = True
     else:
         st.error("Please fill in the job description and u pload your resume!")
 
+####### SHOW IMPROVE BUTTON IF SCORE IS DISPLAYED ##############################
+if st.session_state.get("show_improve_button", False):
+    if st.button("Click to improve your resume"):
+        with st.spinner("Improving your resume"):
+            ai_reponse = gemini_resume_helper(st.session_state["resume_text"], 
+                                              st.session_state["job_text"])
+            st.write(ai_reponse)   
 
 

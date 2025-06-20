@@ -1,11 +1,13 @@
-import google as genai
+from google import genai
 import os
+from google.genai import types
+
 
 
 def gemini_resume_helper(resume_text:str, job_text: str) -> str:
     
     client = genai.Client(api_key = 'AIzaSyBvHOHZ3rAoUzDn3kP8LA5JQgAj-GBmhLo')
-    chat = client.chats.create(model = 'gemini-2.5-flash')
+    chat = client.chats.create(model = 'models/gemini-1.5-flash')
    ### if not user_input:
     response = chat.send_message(f"""You are a helpful and experienced technical recruiter and resume advisor.
                 Below is a job description and a resume. Your task is to review both, and provide helpful, actionable feedback to improve the resume so it better matches the job description.
@@ -25,4 +27,4 @@ def gemini_resume_helper(resume_text:str, job_text: str) -> str:
             """)
     ###else: 
         ####reponse = chat.send_message(user_input)
-    return response
+    return response.text
