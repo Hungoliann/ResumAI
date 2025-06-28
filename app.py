@@ -25,8 +25,12 @@ uploaded_file = st.file_uploader("Upload your resume", type= ["pdf", "txt", "doc
 
 job_description = st.text_area("Paste your job description here", max_chars = 999999)
 
+##### SHOWING MODAL #####
+if "show_modal" not in st.session_state:
+    st.session_state["show_modal"] = False
 
-if st.button("Submit"):
+if st.button("Show score"):
+    st.session_state["show_modal"] = True
     if job_description and uploaded_file:
         with st.spinner("Running your resume through our system..."):
             ext = os.path.splitext(uploaded_file.name)[1].lower()
