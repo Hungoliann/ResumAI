@@ -11,8 +11,8 @@ st.markdown(
     """
     <div style='text-align: center'>
         <h1 style='font-size: 100px;'>ResumAI</h1>
-        <h3>AI Resume reader and recommender</h3>
-        <p>Upload your resume, and this tool will match it with your job description and recommend ways to improve it.</p>
+        <h2>AI Resume reader and recommender</h2>
+        <p>This tool will match your uploaded resume with your job description and recommend ways to improve it.</p>
         <h4>🔧 How it works:</h4>
         <ul style="list-style: none; padding-left: 0;">
             <li>📄 Upload a <strong>.pdf</strong>, <strong>.txt</strong>, or <strong>.docx</strong> resume</li>
