@@ -1,12 +1,13 @@
 from google import genai
 import os
 from google.genai import types
+import streamlit as st 
 
 
 
 def gemini_resume_helper(resume_text:str, job_text: str) -> str:
-    
-    client = genai.Client(api_key = 'AIzaSyBvHOHZ3rAoUzDn3kP8LA5JQgAj-GBmhLo')
+    api_keys = st.secrets["api_key"]
+    client = genai.Client(api_key= api_keys)
     chat = client.chats.create(model = 'models/gemini-1.5-flash')
    ### if not user_input:
     response = chat.send_message(f"""You are a helpful and experienced technical recruiter and resume advisor.
