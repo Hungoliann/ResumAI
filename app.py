@@ -6,19 +6,12 @@ from utils.score_resume import score_resume
 from utils.gemini_helper import gemini_resume_helper
 
 # ---------------------- Streamlit UI ----------------------
-extra,maincol, extra2 = st.columns([1, 5, 1])
 st.markdown(
     """
-    <div style='text-align: center'>
-        <h1 style='font-size: 100px;'>ResumAI</h1>
-        <h2>AI Resume reader and recommender</h2>
+    <div class="tight-container" style="text-align: center;">
+        <h2 style='font-size: 70px; line-height: 0'>ResumAI</h2>
+        <h3 style='color: #CABEFF; font-size: 30px;'><I>AI RESUME READER AND RECOMMENDER</I></h3>
         <p>This tool will match your uploaded resume with your job description and recommend ways to improve it.</p>
-        <h4>🔧 How it works:</h4>
-        <ul style="list-style: none; padding-left: 0;">
-            <li>📄 Upload a <strong>.pdf</strong>, <strong>.txt</strong>, or <strong>.docx</strong> resume</li>
-            <li>📝 Paste a job description</li>
-            <li>✅ Get a match score and keyword feedback</li>
-        </ul>
     </div>
     """,
     unsafe_allow_html=True
@@ -64,9 +57,9 @@ job_description = st.text_area("Paste your job description here", max_chars=9999
 
 
 # --------------Buttons functionality -------------------------
-col1, col2, col3, col4, col5 = st.columns([3, 2, 1, 2, 3])
+col1, col2, col3, col4, col5 = st.columns([3, 3, 1, 3, 3])
 with col2:
-    if st.button("Show score"):
+    if st.button("Get resume match"):
         if job_description and uploaded_file:
             st.session_state["has_file"] = True
             result = get_score(job_description, uploaded_file)
@@ -75,7 +68,7 @@ with col2:
             
 
 with col4:
-    if st.button("Improve Resume"):
+    if st.button("Get feedback"):
         if job_description and uploaded_file:
             st.session_state["has_file"] = True
             with st.spinner("Improving your resume..."):
@@ -90,7 +83,7 @@ with col4:
             st.session_state["has_file"] = False
 
 if st.session_state.get("has_file") is False:
-    st.error("Please fill in the job description and upload your resume!")
+    st.error("Please upload your resume and fill in the job description!")
     
 
 # ---------------------- Show Dialog ----------------------
