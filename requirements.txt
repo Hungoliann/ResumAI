@@ -1,5 +1,5 @@
 streamlit
-PyPDF2
+PyMuPDF
 python-docx
 scikit-learn
 google-genai
