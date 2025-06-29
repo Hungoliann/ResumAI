@@ -1,7 +1,7 @@
 streamlit
-markdown2
 PyPDF2
 python-docx
 scikit-learn
-google-generative-ai
+google-genai
 sentence-transformers
+markdown2
