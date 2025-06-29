@@ -4,3 +4,4 @@ PyPDF2
 python-docx
 scikit-learn
 google-generative-ai
+sentence-transformers
