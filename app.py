@@ -10,7 +10,7 @@ extra,maincol, extra2 = st.columns([1, 5, 1])
 st.markdown(
     """
     <div style='text-align: center'>
-        <h1>ResumAI</h1>
+        <h1 style='font-size: 100px;'>ResumAI</h1>
         <h3>AI Resume reader and recommender</h3>
         <p>Upload your resume, and this tool will match it with your job description and recommend ways to improve it.</p>
         <h4>🔧 How it works:</h4>
