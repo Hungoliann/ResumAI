@@ -1,8 +1,8 @@
 import os
 import markdown2
 import streamlit as st
-from utils.resume_parser import parse_resume
-from utils.score_resume import score_resume
+from utils.resume_parser import ResumeParser
+from utils.score_resume import ScoreResume
 from utils.gemini_helper import gemini_resume_helper
 
 # ---------------------- Streamlit UI ----------------------
@@ -42,7 +42,9 @@ def show_score_and_missing_words(result):
 #------------ Simplifying functions ------------------------
 def get_score(job_description, uploaded_file) -> dict:
     with st.spinner("Running your resume through our system..."):
-        result = score_resume(uploaded_file, job_description)
+        result = ScoreResume(uploaded_file, job_description)
+        result.validate().save().get_parse().score_resume()
+        result = result.get_result()
         if "error" in result:
             st.error(result["error"])
         else:
