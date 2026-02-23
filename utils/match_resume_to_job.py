@@ -37,6 +37,7 @@ class JobDescription:
         return self.embedding
 
 class ResumeMatcher:
+    @staticmethod
     def _default_stopwords():
         return [
             'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 
@@ -61,10 +62,10 @@ class ResumeMatcher:
         self.job = job_desc
 
     def compute_similarity(self, resume: Resume, job: JobDescription) -> tuple[float, list[str]]:
-        resum_emb = resume.compute_embedding(self.model)
+        resume_emb = resume.compute_embedding(self.model).cpu().numpy()        
         job_emb = job.compute_embedding(self.model)
         
-        similarity = cosine_similarity([job_emb], [resum_emb])[0][0]
+        similarity = cosine_similarity([job_emb], [resume_emb])[0][0]
         score = round((similarity) *100, 2)
         
         missing = set(job.cleaned_desc) - set(resume.cleaned_token)
