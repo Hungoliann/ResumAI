@@ -42,7 +42,6 @@ def build_training_examples() -> tuple[list[InputExample], list[InputExample]]:
     feedback, click-through data, or hiring outcomes.
     """
     train_pairs = [
-        # Strong matches
         InputExample(texts=[
             "Python developer with 3 years experience in NLP, transformers, and PyTorch. "
             "Built text classification pipelines and fine-tuned BERT for sentiment analysis.",
@@ -78,7 +77,6 @@ def build_training_examples() -> tuple[list[InputExample], list[InputExample]]:
             "and understanding of microservices architecture."
         ], label=0.91),
 
-        # Partial matches
         InputExample(texts=[
             "Python developer with data analysis experience using pandas and matplotlib. "
             "Some exposure to scikit-learn for regression tasks.",
@@ -114,7 +112,6 @@ def build_training_examples() -> tuple[list[InputExample], list[InputExample]]:
             "and understanding of microservices architecture."
         ], label=0.35),
 
-        # Mismatches
         InputExample(texts=[
             "Graphic designer with Photoshop, Illustrator, and Figma. Created brand "
             "identities and marketing materials for e-commerce clients.",
@@ -151,7 +148,6 @@ def build_training_examples() -> tuple[list[InputExample], list[InputExample]]:
         ], label=0.02),
     ]
 
-    # Validation set — held out from training
     val_pairs = [
         InputExample(texts=[
             "NLP engineer with Hugging Face, BERT fine-tuning, and text classification. "
@@ -245,7 +241,6 @@ class ResumeRanker:
             self.model = SentenceTransformer(model_path)
             print(f"Using fine-tuned model from '{model_path}'")
         else:
-            # Fall back to base model if no fine-tuned checkpoint exists
             self.model = SentenceTransformer('all-MiniLM-L6-v2')
             print("No fine-tuned model found — using base model.")
 
@@ -308,15 +303,12 @@ def evaluate_improvement(train_examples, val_examples):
 if __name__ == "__main__":
     train_examples, val_examples = build_training_examples()
 
-    # Fine-tune
     tuner = ResumeRankerFineTuner()
     tuner.train(train_examples, val_examples, epochs=10, batch_size=4)
     tuner.load_best()
 
-    # Evaluate improvement
     evaluate_improvement(train_examples, val_examples)
 
-    # Demo: rank multiple resumes for one job
     print("\n--- Ranking demo ---")
     job = "Seeking ML engineer with Python, NLP, and transformer model experience."
     candidates = [
